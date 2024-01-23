@@ -13,7 +13,7 @@
           "build": {
             "builder": "@angular-devkit/build-angular:browser",
             "options": {
-              "outputPath": "dist/primeng-quickstart-cli",
+              "outputPath": "dist",
               "index": "src/index.html",
               "main": "src/main.ts",
               "polyfills": ["zone.js"],
@@ -21,7 +21,7 @@
               "assets": [
                 "src/favicon.ico",
                 "src/assets",
-                "_redirects"
+                "src/_redirects"
               ],
               "styles": [
                 "node_modules/primeng/resources/themes/lara-light-indigo/theme.css",
