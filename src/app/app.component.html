@@ -1,10 +1,33 @@
 <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
         <p-toast></p-toast>
-        <p-fileUpload mode="basic" pRipple chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)"></p-fileUpload>
+        <p-fileUpload mode="basic" auto="true" #fileUpload pRipple chooseLabel="Load" name="file[]" maxFileSize="1000000" [customUpload]="true" (uploadHandler)="myUploader($event, fileUpload)"></p-fileUpload>
     </ng-template>
 
     <ng-template pTemplate="right">
-        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        <button pButton pRipple label="Export" icon="pi pi-upload" [disabled]="translations.length == 0" (click)="showDialog()" class="p-button-help"></button>
     </ng-template>
 </p-toolbar>
+<div class="flex justify-content-between flex-wrap">
+    <p-listbox [options]="translations" (onChange)="onChange($event)" optionLabel="key" group="true" [listStyle]="{'max-height':'85vh'}">
+        <ng-template let-group pTemplate="group">
+            <span>{{ group.label }}</span>
+        </ng-template>
+        <ng-template let-translation pTemplate="item">
+            <div class="flex align-items-center gap-2">
+                <div>{{ translation.key }}</div> <i *ngIf="translation.changed" class="pi pi-check" style="font-size: 1rem; color: green;"></i>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="empty">
+            <span>Please load a translation file</span>
+        </ng-template>
+    </p-listbox>
+    <textarea *ngIf="translations.length > 0" class="flex-grow-1 ml-2" [(ngModel)]="selectedTranslation" (input)="translationChange($event)" pInputTextarea autoResize="autoResize"></textarea>
+</div>
+<p-dialog header="Export" [(visible)]="showExportDialog" [style]="{width: '50vw'}">
+    <div class="flex flex-column gap-2">
+        <input type="text" pInputText [(ngModel)]="fileNewName" placeholder="filename" />
+        <button pButton pRipple label="Download" icon="pi pi-upload" (click)="export()" class="p-button-help"></button>
+    </div>
+</p-dialog>

@@ -16,6 +16,7 @@ import { RippleModule } from "primeng/ripple";
 import { ConfirmationService } from 'primeng/api';
 
 import { AppComponent } from './app.component';
+import { ListboxModule } from "primeng/listbox";
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { AppComponent } from './app.component';
         FileUploadModule,
         ToastModule,
         RippleModule,
+        ListboxModule,
     ],
     providers: [ConfirmationService],
     bootstrap: [AppComponent]
